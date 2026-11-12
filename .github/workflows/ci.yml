@@ -33,4 +33,4 @@ jobs:
     # Paso 4: Ejecutar Pytest para verificar que todo funcione bien
     - name: Run Pytest
       run: |
-        pytest
+        python -m pytest

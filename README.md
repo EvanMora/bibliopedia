@@ -21,7 +21,3 @@ La API queda disponible en `http://localhost:8000`. Para cambiar el puerto del h
 ```bash
 docker run -p 8080:8000 bibliopedia
 ```
-# How to run it
-```bash
-fastapi dev app/main.py
-```

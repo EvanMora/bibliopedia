@@ -15,31 +15,25 @@ class BookListService:
         self.book_list_repository = BookListRepository(db)
 
     def mark_as_read(self, user_id: int, book_id: int) -> BookList:
-        """Marca un libro como leído en la lista de lectura del usuario.
-
-        Si el usuario aún no tiene la entrada en su lista, se crea con is_read=True.
-        """
-        book_list = self.book_list_repository.get_by_user_and_book(user_id, book_id)
-        if book_list is None:
-            return self.book_list_repository.create(
-                BookList(id_user=user_id, id_book=book_id, is_read=True)
-            )
-
-        book_list.is_read = True
-        return self.book_list_repository.update(book_list)
+        """Marca un libro como leído en la lista de lectura del usuario."""
+        return self.set_is_read(user_id, book_id, True)
 
     def mark_as_pending(self, user_id: int, book_id: int) -> BookList:
-        """Marca un libro como pendiente (por leer) en la lista de lectura del usuario.
+        """Marca un libro como pendiente (por leer) en la lista de lectura del usuario."""
+        return self.set_is_read(user_id, book_id, False)
 
-        Si el usuario aún no tiene la entrada en su lista, se crea con is_read=False.
+    def set_is_read(self, user_id: int, book_id: int, is_read: bool) -> BookList:
+        """Actualiza el estado de lectura de un libro en la lista del usuario.
+
+        Si el usuario aún no tiene la entrada en su lista, se crea con el estado indicado.
         """
         book_list = self.book_list_repository.get_by_user_and_book(user_id, book_id)
         if book_list is None:
             return self.book_list_repository.create(
-                BookList(id_user=user_id, id_book=book_id, is_read=False)
+                BookList(id_user=user_id, id_book=book_id, is_read=is_read)
             )
 
-        book_list.is_read = False
+        book_list.is_read = is_read
         return self.book_list_repository.update(book_list)
 
     def get_reading_list(self, user_id: int) -> list[BookList]:

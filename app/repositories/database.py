@@ -6,8 +6,6 @@ from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from app.models import Base
-
 load_dotenv()
 
 # La ruta de la base de datos se puede sobreescribir mediante la variable de entorno DATABASE_URL.
@@ -21,9 +19,6 @@ SessionLocal = sessionmaker(
     expire_on_commit=False,
     bind=engine,
 )
-
-# Crea las tablas definidas en los modelos si no existen.
-Base.metadata.create_all(bind=engine)
 
 
 def get_db():

@@ -1,3 +1,7 @@
+"""Punto de entrada de la aplicación Bibliopedia."""
+
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
 
@@ -9,8 +13,18 @@ from app.core.exceptions import (
     BusinessRuleViolationError,
     UserNotFoundError,
 )
+from app.models import Base
+from app.repositories.database import engine
 
-app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Crea las tablas al arrancar la aplicación (no al importar el módulo)."""
+    Base.metadata.create_all(bind=engine)
+    yield
+
+
+app = FastAPI(lifespan=lifespan)
 
 app.include_router(router)
 

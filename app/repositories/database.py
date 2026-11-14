@@ -1,11 +1,17 @@
 """Configuración de la base de datos y sesión de SQLAlchemy."""
 
+import os
+
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from app.models import Base
 
-DATABASE_URL = "sqlite:///./bibliopedia.db"
+load_dotenv()
+
+# La ruta de la base de datos se puede sobreescribir mediante la variable de entorno DATABASE_URL.
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./data/bibliopedia.db")
 
 engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 

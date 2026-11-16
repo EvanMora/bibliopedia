@@ -59,11 +59,24 @@ class ReviewService:
                 f"El user {user_id} no puede calificar el book {book_id} porque no lo marcó como leído"
             )
 
-        return self.review_repository.create(
-            Review(
-                id_user=user_id,
-                id_book=book_id,
-                qualifications=qualifications,
-                description=description,
-            )
-        )
+        review = self.review_repository.get_by_user_and_book(user_id, book_id)
+        if review is None:
+            review = Review(id_user=user_id, id_book=book_id)
+            self.db.add(review)
+        review.qualifications = qualifications
+        review.description = description
+        self.db.commit()
+        self.db.refresh(review)
+        return review
+
+    def get_reviews_by_user(self, user_id: int) -> list[Review]:
+        """Retorna las reseñas del usuario para su biblioteca."""
+        return self.review_repository.get_reviews_by_user(user_id)
+
+    def get_review(self, user_id: int, book_id: int) -> Review | None:
+        """Retorna la reseña del usuario para un libro."""
+        return self.review_repository.get_by_user_and_book(user_id, book_id)
+
+    def delete_review(self, user_id: int, book_id: int) -> bool:
+        """Elimina la reseña propia de un libro sin afectar la entrada de biblioteca."""
+        return self.review_repository.delete_by_user_and_book(user_id, book_id)

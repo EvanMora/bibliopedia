@@ -25,23 +25,24 @@ def test_frontend_assets_are_served():
     assert "text/css" in stylesheet_response.headers["content-type"]
 
 
-def test_seeded_catalog_supports_frontend_workflows(client, db):
+def test_seeded_catalog_supports_frontend_workflows(client, db, register_user):
     seed_demo_data(db)
     seed_demo_data(db)
 
     user = db.query(User).filter_by(email=DEMO_USER_EMAIL).one()
+    account = register_user(email="catalog-reader@example.com")
     assert db.query(Book).count() == len(DEMO_BOOKS)
 
     search_response = client.get("/books/search", params={"keyword": "Clean"})
     assert search_response.status_code == 200
     book = search_response.json()[0]
 
-    list_response = client.get(f"/booklists/{user.id_user}")
+    list_response = client.get(f"/booklists/{account['id_user']}")
     assert list_response.status_code == 200
     assert list_response.json() == []
 
     status_response = client.patch(
-        f"/booklists/{user.id_user}/books/{book['id_book']}/read-status",
+        f"/booklists/{account['id_user']}/books/{book['id_book']}/read-status",
         params={"is_read": True},
     )
     assert status_response.status_code == 200
@@ -49,7 +50,6 @@ def test_seeded_catalog_supports_frontend_workflows(client, db):
     review_response = client.post(
         "/reviews",
         json={
-            "user_id": user.id_user,
             "book_id": book["id_book"],
             "qualifications": 5,
             "description": "Excelente lectura",

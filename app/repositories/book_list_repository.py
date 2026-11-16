@@ -21,3 +21,12 @@ class BookListRepository(BaseRepository[BookList]):
     def get_by_user(self, id_user: int) -> list[BookList]:
         """Retorna todas las entradas de la lista de lectura de un usuario."""
         return self.db.query(BookList).filter(BookList.id_user == id_user).all()
+
+    def delete_by_user_and_book(self, id_user: int, id_book: int) -> bool:
+        """Elimina la entrada de lectura del usuario si existe."""
+        entry = self.get_by_user_and_book(id_user, id_book)
+        if entry is None:
+            return False
+        self.db.delete(entry)
+        self.db.commit()
+        return True

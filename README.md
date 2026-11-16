@@ -49,7 +49,11 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
 La API queda disponible en `http://localhost:8000` y la documentación interactiva en `http://localhost:8000/docs` (Swagger UI) u `http://localhost:8000/redoc` (ReDoc).
 
-La aplicación web está disponible en `http://localhost:8000`. Al iniciar con una base vacía, crea un usuario de prueba (`lector@bibliopedia.local`, ID `1`) y un catálogo inicial. Desde la interfaz puedes buscar esos libros, agregarlos a tu lista de lectura, cambiar su estado y guardar reseñas. El usuario de prueba no tiene contraseña ni autenticación: la aplicación todavía no incluye registro o inicio de sesión.
+La aplicación web está disponible en `http://localhost:8000`. Puedes registrarte como lector, iniciar/cerrar sesión, gestionar tu propia biblioteca y guardar, actualizar o eliminar tus reseñas. Las sesiones usan cookies `HttpOnly`, tokens revocables y vencen después de 12 horas. Las contraseñas se almacenan con PBKDF2; nunca se guardan en texto plano.
+
+Al iniciar con una base vacía, se crea un usuario de demostración sin contraseña utilizable y se importa el catálogo desde `data/books.csv`. Para habilitar una cuenta de administrador, define `BIBLIOPEDIA_ADMIN_EMAIL` y `BIBLIOPEDIA_ADMIN_PASSWORD` en el entorno del servidor antes de iniciarlo. La contraseña debe tener al menos 10 caracteres; ese correo se crea o se promueve al rol administrador. En producción, sirve la aplicación por HTTPS y configura `BIBLIOPEDIA_COOKIE_SECURE=true`.
+
+Los lectores solo pueden consultar y cambiar su propia lista y sus reseñas. Los administradores pueden consultar usuarios y asignar los roles de lector o administrador desde el panel de administración.
 
 ## Endpoints principales
 
@@ -59,6 +63,7 @@ La aplicación web está disponible en `http://localhost:8000`. Al iniciar con u
 | `GET` | `/books/search?keyword={q}` | Busca libros por título, autor o ISBN |
 | `GET` | `/books/{id_book}` | Retorna un libro por su id |
 | `POST` | `/reviews` | Crea una reseña/calificación |
+| `DELETE` | `/reviews/{book_id}` | Elimina la reseña propia del libro (requiere sesión) |
 | `GET` | `/booklists/{user_id}` | Lista de lectura del usuario |
 | `PATCH` | `/booklists/{user_id}/books/{book_id}/read-status?is_read={bool}` | Marca un libro como leído/pendiente |
 

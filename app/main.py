@@ -16,13 +16,16 @@ from app.core.exceptions import (
     UserNotFoundError,
 )
 from app.models import Base
-from app.repositories.database import engine
+from app.repositories.database import SessionLocal, engine
+from app.seed import seed_demo_data
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Crea las tablas al arrancar la aplicación (no al importar el módulo)."""
     Base.metadata.create_all(bind=engine)
+    with SessionLocal() as db:
+        seed_demo_data(db)
     yield
 
 

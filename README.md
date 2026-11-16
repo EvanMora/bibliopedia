@@ -49,7 +49,7 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
 La API queda disponible en `http://localhost:8000` y la documentación interactiva en `http://localhost:8000/docs` (Swagger UI) u `http://localhost:8000/redoc` (ReDoc).
 
-La aplicación web está disponible en `http://localhost:8000`. Permite buscar libros del catálogo, agregarlos a una lista de lectura, cambiar su estado y escribir reseñas. Usa un ID de usuario existente en la base de datos (por defecto, `1`); la API no incluye todavía funciones para registrar usuarios ni para crear libros.
+La aplicación web está disponible en `http://localhost:8000`. Al iniciar con una base vacía, crea un usuario de prueba (`lector@bibliopedia.local`, ID `1`) y un catálogo inicial. Desde la interfaz puedes buscar esos libros, agregarlos a tu lista de lectura, cambiar su estado y guardar reseñas. El usuario de prueba no tiene contraseña ni autenticación: la aplicación todavía no incluye registro o inicio de sesión.
 
 ## Endpoints principales
 

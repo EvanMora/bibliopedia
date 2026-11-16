@@ -49,11 +49,13 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
 La API queda disponible en `http://localhost:8000` y la documentación interactiva en `http://localhost:8000/docs` (Swagger UI) u `http://localhost:8000/redoc` (ReDoc).
 
+La aplicación web está disponible en `http://localhost:8000`. Al iniciar con una base vacía, crea un usuario de prueba (`lector@bibliopedia.local`, ID `1`) y un catálogo inicial. Desde la interfaz puedes buscar esos libros, agregarlos a tu lista de lectura, cambiar su estado y guardar reseñas. El usuario de prueba no tiene contraseña ni autenticación: la aplicación todavía no incluye registro o inicio de sesión.
+
 ## Endpoints principales
 
 | Método | Ruta | Descripción |
 |---|---|---|
-| `GET` | `/` | Ruta de prueba |
+| `GET` | `/` | Interfaz web de Bibliopedia |
 | `GET` | `/books/search?keyword={q}` | Busca libros por título, autor o ISBN |
 | `GET` | `/books/{id_book}` | Retorna un libro por su id |
 | `POST` | `/reviews` | Crea una reseña/calificación |

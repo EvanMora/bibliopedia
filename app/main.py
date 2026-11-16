@@ -1,9 +1,11 @@
 """Punto de entrada de la aplicación Bibliopedia."""
 
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi import FastAPI, Request, status
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 
 from app.api.router import router
 from app.core.exceptions import (
@@ -14,19 +16,23 @@ from app.core.exceptions import (
     UserNotFoundError,
 )
 from app.models import Base
-from app.repositories.database import engine
+from app.repositories.database import SessionLocal, engine
+from app.seed import seed_demo_data
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Crea las tablas al arrancar la aplicación (no al importar el módulo)."""
     Base.metadata.create_all(bind=engine)
+    with SessionLocal() as db:
+        seed_demo_data(db)
     yield
 
 
 app = FastAPI(lifespan=lifespan)
 
 app.include_router(router)
+app.mount("/static", StaticFiles(directory=Path(__file__).parent / "static"), name="static")
 
 
 @app.exception_handler(BibliopediaError)
@@ -44,4 +50,4 @@ async def bibliopedia_exception_handler(request: Request, exc: BibliopediaError)
 
 @app.get("/")
 def home():
-    return {"mensaje": "Hola bibliopedia"}
+    return FileResponse(Path(__file__).parent / "static" / "index.html")

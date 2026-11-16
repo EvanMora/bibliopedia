@@ -13,6 +13,7 @@ class User(Base):
     name: Mapped[str] = mapped_column(String(100), nullable=False)
     email: Mapped[str] = mapped_column(String(255), nullable=False, unique=True, index=True)
     password: Mapped[str] = mapped_column(String(255), nullable=False)
+    role: Mapped[str] = mapped_column(String(20), nullable=False, default="reader")
 
     # Un usuario puede tener muchas reseñas (1:N)
     reviews: Mapped[list["Review"]] = relationship(
@@ -21,5 +22,8 @@ class User(Base):
 
     # Un usuario puede tener muchas entradas en su lista de lectura (1:N)
     book_lists: Mapped[list["BookList"]] = relationship(
+        back_populates="user", cascade="all, delete-orphan"
+    )
+    auth_sessions: Mapped[list["AuthSession"]] = relationship(
         back_populates="user", cascade="all, delete-orphan"
     )

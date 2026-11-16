@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from app.core.exceptions import UserNotFoundError
+from app.core.exceptions import BookListNotFoundError, UserNotFoundError
 from app.models import BookList
 from app.repositories import BookListRepository, BookRepository, UserRepository
 
@@ -42,3 +42,10 @@ class BookListService:
         if user is None:
             raise UserNotFoundError(f"User con id_user={user_id} no encontrado")
         return self.book_list_repository.get_by_user(user_id)
+
+    def remove_from_reading_list(self, user_id: int, book_id: int) -> None:
+        """Elimina un libro de la lista del usuario sin borrar su reseña."""
+        if not self.book_list_repository.delete_by_user_and_book(user_id, book_id):
+            raise BookListNotFoundError(
+                f"El user {user_id} no tiene el book {book_id} en su lista de lectura"
+            )

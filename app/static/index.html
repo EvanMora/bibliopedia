@@ -44,7 +44,7 @@
 
         <div class="profile-card">
           <span class="avatar" aria-hidden="true">L</span>
-          <span class="profile-copy"><strong>Mi espacio</strong><small id="profile-user">Usuario 1</small></span>
+          <span class="profile-copy"><strong id="profile-name">Mi espacio</strong><small id="profile-user">Invitado</small></span>
           <button class="icon-button profile-settings" id="open-settings" type="button" aria-label="Cambiar usuario" title="Cambiar usuario">
             <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.4 1.1-1.4 2.4-1.7-.7a7.8 7.8 0 0 1-1.5.9l-.3 1.8h-2.8l-.3-1.8a7.8 7.8 0 0 1-1.5-.9l-1.7.7-1.4-2.4 1.4-1.1a7 7 0 0 1 0-1.8l-1.4-1.1 1.4-2.4 1.7.7a7.8 7.8 0 0 1 1.5-.9l.3-1.8h2.8l.3 1.8a7.8 7.8 0 0 1 1.5.9l1.7-.7 1.4 2.4-1.4 1.1a7 7 0 0 1 0 1.7Z" transform="translate(-1 -1) scale(.92)"/></svg>
           </button>
@@ -62,7 +62,7 @@
           <span class="topbar-label">TU RINCÓN DE LECTURA</span>
           <button class="user-chip" id="open-settings-mobile" type="button">
             <span class="avatar avatar-small" aria-hidden="true">L</span>
-            <span id="topbar-user">Usuario 1</span>
+            <span id="topbar-user">Ingresar</span>
             <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m6 8 4 4 4-4"/></svg>
           </button>
         </header>
@@ -131,6 +131,19 @@
             <div class="book-grid library-grid" id="library-results"></div>
           </section>
 
+          <section class="admin-section" id="admin-panel" hidden aria-labelledby="admin-heading">
+            <div class="section-heading">
+              <div><p class="section-overline">GESTIÓN DE CUENTAS</p><h2 id="admin-heading">Administración</h2></div>
+            </div>
+            <div id="admin-message" class="inline-message" role="status" aria-live="polite"></div>
+            <div class="admin-table-wrap">
+              <table class="admin-table">
+                <thead><tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Permisos</th></tr></thead>
+                <tbody id="admin-users"></tbody>
+              </table>
+            </div>
+          </section>
+
           <footer class="footer"><span>Hecho para quienes siempre llevan un libro en la mochila.</span><span>Bibliopedia <span class="footer-heart">♥</span></span></footer>
         </div>
       </main>
@@ -161,17 +174,36 @@
       </form>
     </dialog>
 
-    <dialog class="modal" id="settings-dialog" aria-labelledby="settings-heading">
-      <form class="modal-card settings-card" id="settings-form">
+    <dialog class="modal" id="auth-dialog" aria-labelledby="auth-heading">
+      <form class="modal-card settings-card" id="auth-form">
         <button class="modal-close" type="button" data-close-dialog aria-label="Cerrar">×</button>
         <p class="section-overline">TU ESPACIO PERSONAL</p>
-        <h2 id="settings-heading">Configura tu perfil</h2>
-        <p class="settings-description">Ingresa el ID de un usuario existente en la base de datos para ver y actualizar su biblioteca.</p>
-        <label class="field-label" for="user-id-input">ID de usuario</label>
-        <input class="text-field" id="user-id-input" type="number" min="1" step="1" required>
-        <p class="form-error" id="settings-error" role="alert"></p>
-        <button class="primary-button modal-submit" type="submit">Guardar y continuar</button>
+        <h2 id="auth-heading">Inicia sesión</h2>
+        <p class="settings-description">Accede a tu biblioteca o crea una cuenta de lector para guardar tus libros.</p>
+        <div class="auth-tabs" role="group" aria-label="Tipo de acceso">
+          <button type="button" class="filter-tab active" data-auth-mode="login">Iniciar sesión</button>
+          <button type="button" class="filter-tab" data-auth-mode="register">Crear cuenta</button>
+        </div>
+        <label class="field-label" for="auth-name" hidden>Nombre</label>
+        <input class="text-field" id="auth-name" name="name" type="text" minlength="1" maxlength="100" placeholder="Tu nombre" autocomplete="name" hidden>
+        <label class="field-label" for="auth-email">Correo electrónico</label>
+        <input class="text-field" id="auth-email" name="email" type="email" maxlength="255" placeholder="tu@correo.com" autocomplete="email" required>
+        <label class="field-label auth-password-label" for="auth-password">Contraseña</label>
+        <input class="text-field" id="auth-password" name="password" type="password" minlength="10" maxlength="128" placeholder="Mínimo 10 caracteres" autocomplete="current-password" required>
+        <p class="form-error" id="auth-error" role="alert"></p>
+        <button class="primary-button modal-submit" id="auth-submit" type="submit">Iniciar sesión</button>
       </form>
+    </dialog>
+
+    <dialog class="modal" id="account-dialog" aria-labelledby="account-heading">
+      <div class="modal-card settings-card">
+        <button class="modal-close" type="button" data-close-dialog aria-label="Cerrar">×</button>
+        <p class="section-overline">TU ESPACIO PERSONAL</p>
+        <h2 id="account-heading">Mi cuenta</h2>
+        <p class="account-name" id="account-name"></p>
+        <p class="settings-description" id="account-details"></p>
+        <button class="primary-button modal-submit" id="logout-button" type="button">Cerrar sesión</button>
+      </div>
     </dialog>
 
     <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>

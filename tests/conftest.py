@@ -40,6 +40,19 @@ def client():
 
 
 @pytest.fixture()
+def register_user(client):
+    def register(name="Lector de prueba", email="lector@example.com", password="lector-password-123"):
+        response = client.post(
+            "/auth/register",
+            json={"name": name, "email": email, "password": password},
+        )
+        assert response.status_code == 201, response.text
+        return response.json()["user"]
+
+    return register
+
+
+@pytest.fixture()
 def db():
     session = TestingSessionLocal()
     try:

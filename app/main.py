@@ -22,10 +22,11 @@ from app.seed import seed_demo_data
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Crea las tablas al arrancar la aplicación (no al importar el módulo)."""
+    """Crea las tablas y siembra los libros iniciales al arrancar la aplicación."""
     Base.metadata.create_all(bind=engine)
-    with SessionLocal() as db:
-        seed_demo_data(db)
+    # Siembra idempotente desde app/data/books.csv (solo si la tabla está vacía)
+    from app.scripts.seed_books import seed_books
+    seed_books()
     yield
 
 

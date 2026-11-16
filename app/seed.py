@@ -46,8 +46,9 @@ DEMO_BOOKS = (
 
 
 def seed_demo_data(db: Session) -> None:
-    """Añade un usuario de prueba y libros solo si sus tablas están vacías."""
-    if db.query(User).first() is None:
+    """Añade el usuario de prueba y un catálogo básico si todavía hacen falta."""
+    demo_user = db.query(User).filter(User.email == DEMO_USER_EMAIL).first()
+    if demo_user is None:
         db.add(
             User(
                 name="Lector de prueba",

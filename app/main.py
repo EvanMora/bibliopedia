@@ -24,8 +24,12 @@ from app.seed import seed_demo_data
 async def lifespan(app: FastAPI):
     """Crea las tablas y siembra los libros iniciales al arrancar la aplicación."""
     Base.metadata.create_all(bind=engine)
-    # Siembra idempotente desde app/data/books.csv (solo si la tabla está vacía)
+    with SessionLocal() as db:
+        seed_demo_data(db)
+
+    # Completa el catálogo desde data/books.csv sin volver a insertar ISBN existentes.
     from app.scripts.seed_books import seed_books
+
     seed_books()
     yield
 

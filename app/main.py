@@ -1,9 +1,11 @@
 """Punto de entrada de la aplicación Bibliopedia."""
 
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi import FastAPI, Request, status
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 
 from app.api.router import router
 from app.core.exceptions import (
@@ -27,6 +29,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 app.include_router(router)
+app.mount("/static", StaticFiles(directory=Path(__file__).parent / "static"), name="static")
 
 
 @app.exception_handler(BibliopediaError)
@@ -44,4 +47,4 @@ async def bibliopedia_exception_handler(request: Request, exc: BibliopediaError)
 
 @app.get("/")
 def home():
-    return {"mensaje": "Hola bibliopedia"}
+    return FileResponse(Path(__file__).parent / "static" / "index.html")

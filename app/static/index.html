@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f6f4ee">
+    <meta name="description" content="Organiza tus lecturas y descubre tu próximo libro con Bibliopedia.">
+    <link rel="icon" href="data:,">
+    <title>Bibliopedia — tu espacio lector</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="/static/app.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Navegación principal">
+        <a class="brand" href="#inicio" aria-label="Bibliopedia, inicio">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none"><path d="M5.5 7.5c4.2-.8 7.7.2 10.5 2.6v16c-2.8-2.4-6.3-3.4-10.5-2.6v-16Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M26.5 7.5c-4.2-.8-7.7.2-10.5 2.6v16c2.8-2.4 6.3-3.4 10.5-2.6v-16Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          </span>
+          <span>Bibliopedia<span class="brand-period">.</span></span>
+        </a>
+
+        <p class="nav-caption">MENÚ</p>
+        <nav class="main-nav">
+          <a class="nav-link active" href="#inicio">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3.5 10 8.5-7 8.5 7v10.5h-6v-7h-5v7h-6V10Z"/></svg>
+            Inicio
+          </a>
+          <a class="nav-link" href="#explorar">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg>
+            Explorar libros
+          </a>
+          <a class="nav-link" href="#biblioteca">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5h14v16H5z"/><path d="M8.5 8h7M8.5 11.5h7M8.5 15h4"/></svg>
+            Mi biblioteca
+          </a>
+        </nav>
+
+        <div class="sidebar-note">
+          <span class="note-sparkle" aria-hidden="true">✳</span>
+          <p>Una página basta para empezar a viajar.</p>
+          <span class="note-author">— Bibliopedia</span>
+        </div>
+
+        <div class="profile-card">
+          <span class="avatar" aria-hidden="true">L</span>
+          <span class="profile-copy"><strong id="profile-name">Mi espacio</strong><small id="profile-user">Invitado</small></span>
+          <button class="icon-button profile-settings" id="open-settings" type="button" aria-label="Cambiar usuario" title="Cambiar usuario">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.4 1.1-1.4 2.4-1.7-.7a7.8 7.8 0 0 1-1.5.9l-.3 1.8h-2.8l-.3-1.8a7.8 7.8 0 0 1-1.5-.9l-1.7.7-1.4-2.4 1.4-1.1a7 7 0 0 1 0-1.8l-1.4-1.1 1.4-2.4 1.7.7a7.8 7.8 0 0 1 1.5-.9l.3-1.8h2.8l.3 1.8a7.8 7.8 0 0 1 1.5.9l1.7-.7 1.4 2.4-1.4 1.1a7 7 0 0 1 0 1.7Z" transform="translate(-1 -1) scale(.92)"/></svg>
+          </button>
+        </div>
+      </aside>
+
+      <main class="main-content" id="inicio">
+        <header class="topbar">
+          <button class="mobile-brand" type="button" aria-label="Bibliopedia">
+            <span class="brand-mark" aria-hidden="true">
+              <svg viewBox="0 0 32 32" fill="none"><path d="M5.5 7.5c4.2-.8 7.7.2 10.5 2.6v16c-2.8-2.4-6.3-3.4-10.5-2.6v-16Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M26.5 7.5c-4.2-.8-7.7.2-10.5 2.6v16c2.8-2.4 6.3-3.4 10.5-2.6v-16Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+            </span>
+            <span>Bibliopedia<span class="brand-period">.</span></span>
+          </button>
+          <span class="topbar-label">TU RINCÓN DE LECTURA</span>
+          <button class="user-chip" id="open-settings-mobile" type="button">
+            <span class="avatar avatar-small" aria-hidden="true">L</span>
+            <span id="topbar-user">Ingresar</span>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m6 8 4 4 4-4"/></svg>
+          </button>
+        </header>
+        <nav class="mobile-nav" aria-label="Navegación principal">
+          <a class="nav-link active" href="#inicio">Inicio</a>
+          <a class="nav-link" href="#explorar">Explorar</a>
+          <a class="nav-link" href="#biblioteca">Mi biblioteca</a>
+        </nav>
+
+        <div class="page-content">
+          <section class="welcome-row" aria-labelledby="welcome-heading">
+            <div>
+              <p class="eyebrow"><span class="eyebrow-dot"></span> TU RINCÓN DE LECTURA</p>
+              <h1 id="welcome-heading">Hola, lector<span class="heading-period">.</span></h1>
+              <p class="welcome-subtitle">Cada página te acerca a una nueva aventura.</p>
+            </div>
+            <div class="reading-stats" aria-label="Resumen de tu biblioteca">
+              <div class="stat-item"><span class="stat-icon stat-icon-green"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5h14v16H5z"/><path d="M8.5 8h7M8.5 11.5h7"/></svg></span><span><strong id="total-count">—</strong><small>en tu biblioteca</small></span></div>
+              <span class="stat-divider"></span>
+              <div class="stat-item"><span class="stat-icon stat-icon-peach"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.4-7.5-10A4.2 4.2 0 0 1 12 7.7 4.2 4.2 0 0 1 19.5 10c0 5.6-7.5 10-7.5 10Z"/></svg></span><span><strong id="read-count">—</strong><small>libros leídos</small></span></div>
+            </div>
+          </section>
+
+          <section class="hero-card" aria-labelledby="hero-heading">
+            <div class="hero-copy">
+              <span class="hero-kicker"><span aria-hidden="true">✦</span> TU PRÓXIMA GRAN HISTORIA</span>
+              <h2 id="hero-heading">Hay mundos<br>esperando por ti<span class="hero-period">.</span></h2>
+              <p>Busca entre tus libros favoritos y encuentra esa historia que no sabías que necesitabas.</p>
+              <a class="hero-link" href="#explorar">Explorar el catálogo <span aria-hidden="true">→</span></a>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+              <div class="art-sun"></div>
+              <div class="art-star star-one">✳</div><div class="art-star star-two">✦</div><div class="art-star star-three">·</div>
+              <div class="art-book art-book-back"></div>
+              <div class="art-book art-book-front"><span class="art-book-line"></span><span class="art-book-title">THE<br>STORY<br>WITHIN</span><span class="art-book-author">A WORLD OF WORDS</span></div>
+              <div class="art-leaf leaf-one"></div><div class="art-leaf leaf-two"></div>
+              <span class="art-caption">a little more wonder</span>
+            </div>
+          </section>
+
+          <section class="explore-section" id="explorar" aria-labelledby="explore-heading">
+            <div class="section-heading">
+              <div><p class="section-overline">DESCUBRE TU PRÓXIMA LECTURA</p><h2 id="explore-heading">Explora el catálogo</h2></div>
+              <span class="section-aside">Las mejores historias empiezan con una búsqueda.</span>
+            </div>
+            <form class="search-form" id="search-form" role="search">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg>
+              <label class="sr-only" for="search-input">Buscar por título, autor o ISBN</label>
+              <input id="search-input" name="keyword" type="search" placeholder="Busca por título, autor o ISBN..." autocomplete="off">
+              <button type="submit">Buscar <span aria-hidden="true">→</span></button>
+            </form>
+            <div id="search-message" class="inline-message" role="status" aria-live="polite"></div>
+            <div class="book-grid search-grid" id="search-results" aria-live="polite"></div>
+          </section>
+
+          <section class="library-section" id="biblioteca" aria-labelledby="library-heading">
+            <div class="section-heading library-heading">
+              <div><p class="section-overline">TU COLECCIÓN PERSONAL</p><h2 id="library-heading">Mi biblioteca <span id="library-total" class="count-pill">0</span></h2></div>
+              <div class="filter-tabs" role="group" aria-label="Filtrar libros">
+                <button class="filter-tab active" type="button" data-filter="all">Todos</button>
+                <button class="filter-tab" type="button" data-filter="pending">Por leer</button>
+                <button class="filter-tab" type="button" data-filter="read">Leídos</button>
+              </div>
+            </div>
+            <div id="library-message" class="inline-message" role="status" aria-live="polite"></div>
+            <div class="book-grid library-grid" id="library-results"></div>
+          </section>
+
+          <section class="admin-section" id="admin-panel" hidden aria-labelledby="admin-heading">
+            <div class="section-heading">
+              <div><p class="section-overline">GESTIÓN DE CUENTAS</p><h2 id="admin-heading">Administración</h2></div>
+            </div>
+            <div id="admin-message" class="inline-message" role="status" aria-live="polite"></div>
+            <div class="admin-table-wrap">
+              <table class="admin-table">
+                <thead><tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Permisos</th></tr></thead>
+                <tbody id="admin-users"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <footer class="footer"><span>Hecho para quienes siempre llevan un libro en la mochila.</span><span>Bibliopedia <span class="footer-heart">♥</span></span></footer>
+        </div>
+      </main>
+    </div>
+
+    <dialog class="modal" id="review-dialog" aria-labelledby="review-heading">
+      <form class="modal-card" id="review-form">
+        <button class="modal-close" type="button" data-close-dialog aria-label="Cerrar">×</button>
+        <p class="section-overline">GUARDA LO QUE TE HIZO SENTIR</p>
+        <h2 id="review-heading">¿Qué te pareció?</h2>
+        <p class="review-book-title" id="review-book-title"></p>
+        <input type="hidden" id="review-book-id">
+        <fieldset class="rating-field">
+          <legend class="sr-only">Tu calificación</legend>
+          <div class="rating-stars" role="radiogroup" aria-label="Calificación de una a cinco estrellas">
+            <button type="button" class="rating-star" data-rating="1" role="radio" aria-checked="false" aria-label="1 estrella">★</button>
+            <button type="button" class="rating-star" data-rating="2" role="radio" aria-checked="false" aria-label="2 estrellas">★</button>
+            <button type="button" class="rating-star" data-rating="3" role="radio" aria-checked="false" aria-label="3 estrellas">★</button>
+            <button type="button" class="rating-star" data-rating="4" role="radio" aria-checked="false" aria-label="4 estrellas">★</button>
+            <button type="button" class="rating-star" data-rating="5" role="radio" aria-checked="false" aria-label="5 estrellas">★</button>
+          </div>
+          <span class="rating-hint" id="rating-hint">Elige una calificación</span>
+        </fieldset>
+        <label class="field-label" for="review-description">Tu reseña <span>(opcional)</span></label>
+        <textarea id="review-description" rows="4" placeholder="¿Qué te gustaría recordar de este libro?"></textarea>
+        <p class="form-error" id="review-error" role="alert"></p>
+        <button class="primary-button modal-submit" type="submit">Guardar reseña</button>
+      </form>
+    </dialog>
+
+    <dialog class="modal" id="auth-dialog" aria-labelledby="auth-heading">
+      <form class="modal-card settings-card" id="auth-form">
+        <button class="modal-close" type="button" data-close-dialog aria-label="Cerrar">×</button>
+        <p class="section-overline">TU ESPACIO PERSONAL</p>
+        <h2 id="auth-heading">Inicia sesión</h2>
+        <p class="settings-description">Accede a tu biblioteca o crea una cuenta de lector para guardar tus libros.</p>
+        <div class="auth-tabs" role="group" aria-label="Tipo de acceso">
+          <button type="button" class="filter-tab active" data-auth-mode="login">Iniciar sesión</button>
+          <button type="button" class="filter-tab" data-auth-mode="register">Crear cuenta</button>
+        </div>
+        <label class="field-label" for="auth-name" hidden>Nombre</label>
+        <input class="text-field" id="auth-name" name="name" type="text" minlength="1" maxlength="100" placeholder="Tu nombre" autocomplete="name" hidden>
+        <label class="field-label" for="auth-email">Correo electrónico</label>
+        <input class="text-field" id="auth-email" name="email" type="email" maxlength="255" placeholder="tu@correo.com" autocomplete="email" required>
+        <label class="field-label auth-password-label" for="auth-password">Contraseña</label>
+        <input class="text-field" id="auth-password" name="password" type="password" minlength="10" maxlength="128" placeholder="Mínimo 10 caracteres" autocomplete="current-password" required>
+        <p class="form-error" id="auth-error" role="alert"></p>
+        <button class="primary-button modal-submit" id="auth-submit" type="submit">Iniciar sesión</button>
+      </form>
+    </dialog>
+
+    <dialog class="modal" id="account-dialog" aria-labelledby="account-heading">
+      <div class="modal-card settings-card">
+        <button class="modal-close" type="button" data-close-dialog aria-label="Cerrar">×</button>
+        <p class="section-overline">TU ESPACIO PERSONAL</p>
+        <h2 id="account-heading">Mi cuenta</h2>
+        <p class="account-name" id="account-name"></p>
+        <p class="settings-description" id="account-details"></p>
+        <button class="primary-button modal-submit" id="logout-button" type="button">Cerrar sesión</button>
+      </div>
+    </dialog>
+
+    <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
+  </body>
+</html>
